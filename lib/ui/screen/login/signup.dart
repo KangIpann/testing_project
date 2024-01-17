@@ -28,15 +28,26 @@ class _LoginState extends State<Login> {
                     width: double.infinity,
                     child: Image.asset("assets/img/login/top.png", fit: BoxFit.fill,)),
                         Container(
-                          width: 300,
-                          height: 400,
+                          width: 320,
+                          height: 500,
+                          padding: EdgeInsets.all(20),
                           // margin: EdgeInsets.only(bottom: 100),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(20))),
+                            color: Colors.white,
+                              borderRadius: BorderRadius.all(Radius.circular(20)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                offset: Offset(5.0, 5.0),
+                                blurRadius: 10.0,
+                              )
+                            ],
+                          ),
                           //Input Section
                           child: Form(
                             key: _formKey,
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 //Img
                                 Container(
@@ -48,30 +59,15 @@ class _LoginState extends State<Login> {
                                 //Text
                                 Container(
                                     child: Text("Sign Up",style: TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 24,
                                       fontFamily: 'Raleway',
                                       fontWeight: FontWeight.bold
                                     ),),
-                                    margin: EdgeInsets.only(right: 150),
+                                    margin: EdgeInsets.only(right: 170,),
                                 ),
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    TextFormField(
-                                      controller: _usernameController,
-                                      decoration: InputDecoration(
-                                        labelText: 'Nama Pengguna',
-                                        icon: Icon(Icons.person),
-                                      ),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'Nama Pengguna tidak boleh kosong';
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                    SizedBox(height: 16),
-
                                     TextFormField(
                                       controller: _emailController,
                                       keyboardType: TextInputType.emailAddress,
@@ -84,6 +80,20 @@ class _LoginState extends State<Login> {
                                           return 'Email tidak boleh kosong';
                                         } else if (!RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$').hasMatch(value)) {
                                           return 'Format email tidak valid';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                    SizedBox(height: 16),
+                                    TextFormField(
+                                      controller: _usernameController,
+                                      decoration: InputDecoration(
+                                        labelText: 'Nama Pengguna',
+                                        icon: Icon(Icons.person),
+                                      ),
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Nama Pengguna tidak boleh kosong';
                                         }
                                         return null;
                                       },
@@ -124,25 +134,56 @@ class _LoginState extends State<Login> {
                                         return null;
                                       },
                                     ),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        if (_formKey.currentState!.validate()) {
-                                          // Form validation passed, perform sign up logic here
-                                          print('Nama Pengguna: ${_usernameController.text}');
-                                          print('Email: ${_emailController.text}');
-                                          print('Password: ${_passwordController.text}');
-                                          print('Konfirmasi Password: ${_confirmPasswordController.text}');
-                                        }
-                                      },
-                                      child: Container(
-                                        child: Image.asset('assets/img/login/go.png'),
-                                      ),
-                                    )
                                   ],
-                                )],
+                                )
+                              ],
                             ),
                           ),
                         ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 60),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                          ),
+                          onPressed: (){},
+                          child: Text(
+                              "Sign In ?",
+                          style: TextStyle(
+                            fontFamily: "Raleway",
+                            fontWeight: FontWeight.normal,
+                            color: Colors.blueAccent
+                          ),
+                          ),
+                        ),
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(color: Colors.transparent, width: 10),
+                            borderRadius: BorderRadius.circular(400),
+                          ),
+                          fixedSize: Size(100, 100),
+                          shadowColor: Colors.transparent.withOpacity(0.1)
+                        ),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            print('Nama Pengguna: ${_usernameController.text}');
+                            print('Email: ${_emailController.text}');
+                            print('Password: ${_passwordController.text}');
+                            print('Konfirmasi Password: ${_confirmPasswordController.text}');
+                          }
+                        },
+                        child: Container(
+                          child: Image.asset('assets/img/login/go.png'),
+                        ),
+                      ),
+                    ],
+                  ),
                   Container(
                       margin: EdgeInsets.only(top: 80),
                       width: double.infinity,
